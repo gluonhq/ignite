@@ -1,0 +1,51 @@
+group 'com.gluonhq'
+version '1.0.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply from: '../mavenPublish.gradle'
+
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+
+    group 'com.gluonhq'
+    version = '1.0.0-SNAPSHOT'
+    archivesBaseName = 'ignite-' + name
+
+    configurations {
+        published
+    }
+
+    task sourcesJar(type: Jar) {
+        from sourceSets.main.allSource
+        classifier = 'sources'
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        from javadoc.destinationDir
+        classifier = 'javadoc'
+    }
+
+    artifacts {
+        archives sourcesJar, javadocJar
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(':dagger')
+    compile project(':guice')
+    compile project(':spring')
+    compile project(':common')
+}
