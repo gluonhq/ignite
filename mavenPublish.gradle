@@ -49,6 +49,7 @@ install {
 private configurePOM(def pom) {
     pom.project {
         name "Gluon Ignite ${project.name.capitalize()}"
+        description project.ext.description
         url 'http://gluonhq.com/open-source/ignite/'
         modelVersion '4.0.0'
         packaging 'jar'

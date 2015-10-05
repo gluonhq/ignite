@@ -3,3 +3,6 @@ dependencies {
     compile 'cglib:cglib:3.1'
     compile project(':common')
 }
+
+ext.description = 'Creates a common abstraction over spring'
+

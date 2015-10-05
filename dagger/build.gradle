@@ -3,3 +3,6 @@ dependencies {
     compile 'com.squareup.dagger:dagger-compiler:1.2.2'
     compile project(':common')
 }
+
+ext.description = 'Creates a common abstraction over dagger'
+
