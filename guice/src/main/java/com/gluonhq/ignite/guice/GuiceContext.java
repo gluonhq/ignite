@@ -63,7 +63,7 @@ public class GuiceContext implements DIContext {
         protected void configure() {}
 
         @Provides
-        @Singleton
+//        @Singleton
         FXMLLoader provideFxmlLoader() {
             FXMLLoader loader = new FXMLLoader();
             loader.setControllerFactory(GuiceContext.this::getInstance);

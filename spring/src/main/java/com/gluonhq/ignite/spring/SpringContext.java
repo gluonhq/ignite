@@ -8,7 +8,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -83,7 +82,7 @@ class FXModule implements ApplicationContextAware {
     }
 
     @Bean()
-    @Scope("singleton")
+//    @Scope("singleton")
     public FXMLLoader provideFxmlLoader() {
         FXMLLoader loader = new FXMLLoader();
         loader.setControllerFactory(type -> SpringUtils.<Object>getInstance(appContext, (Class<Object>) type));

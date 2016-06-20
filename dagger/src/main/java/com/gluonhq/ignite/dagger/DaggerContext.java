@@ -6,7 +6,6 @@ import dagger.ObjectGraph;
 import dagger.Provides;
 import javafx.fxml.FXMLLoader;
 
-import javax.inject.Singleton;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -63,7 +62,7 @@ public class DaggerContext implements DIContext {
     class FXModule  {
 
         @Provides
-        @Singleton
+//        @Singleton
         FXMLLoader provideFxmlLoader() {
             FXMLLoader loader = new FXMLLoader();
             loader.setControllerFactory(DaggerContext.this::getInstance);
