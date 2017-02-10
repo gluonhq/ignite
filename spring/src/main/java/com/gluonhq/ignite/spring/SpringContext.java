@@ -82,7 +82,7 @@ class FXModule implements ApplicationContextAware {
     }
 
     @Bean()
-//    @Scope("singleton")
+    @Scope("prototype")
     public FXMLLoader provideFxmlLoader() {
         FXMLLoader loader = new FXMLLoader();
         loader.setControllerFactory(type -> SpringUtils.<Object>getInstance(appContext, (Class<Object>) type));
