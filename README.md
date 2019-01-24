@@ -41,54 +41,14 @@ Gluon Ignite also supports other DI frameworks. By using a DaggerContext or Spri
 it can be easily set up to work with with those frameworks instead.
 
 To use Gluon Ignite in your software, simply include it as a dependency in your preferred dependency manager. 
-Shown below are examples of how to include Gluon Ignite and one specific implementation in your dependency chain:
+All artifacts are availble in Maven Central:
 
-#### Usage with Dagger
+| Artifact Name | Version |
+| ------------- | ------------- |
+| Ignite Dagger | [![xxx](https://img.shields.io/maven-central/v/com.gluonhq/ignite-dagger.svg)](https://search.maven.org/artifact/com.gluonhq/ignite-dagger)  |
+| Ignite Guice  | [![xxx](https://img.shields.io/maven-central/v/com.gluonhq/ignite-guice.svg)](https://search.maven.org/artifact/com.gluonhq/ignite-guice)  |
+| Ignite Spring | [![xxx](https://img.shields.io/maven-central/v/com.gluonhq/ignite-spring.svg)](https://search.maven.org/artifact/com.gluonhq/ignite-spring)  |
 
-Maven:
-```xml
-<dependency>
-  <groupId>com.gluonhq</groupId>
-  <artifactId>ignite-dagger</artifactId>
-  <version>1.0.2</version>
-</dependency>
-```
 
-Gradle:
-```groovy
-compile 'com.gluonhq:ignite-dagger:1.0.2'
-```
-
-#### Usage with Guice
-
-Maven:
-```xml
-<dependency>
-  <groupId>com.gluonhq</groupId>
-  <artifactId>ignite-guice</artifactId>
-  <version>1.0.2</version>
-</dependency>
-```
-
-Gradle:
-```groovy
-compile 'com.gluonhq:ignite-guice:1.0.2'
-```
-
-#### Usage with Spring
-
-Maven:
-```xml
-<dependency>
-  <groupId>com.gluonhq</groupId>
-  <artifactId>ignite-spring</artifactId>
-  <version>1.0.2</version>
-</dependency>
-```
-
-Gradle:
-```groovy
-compile 'com.gluonhq:ignite-spring:1.0.2'
-```
-Note that `ignite-common` is automatically included as a dependency for each module, 
+> Note that `ignite-common` is automatically included as a dependency for each module, 
 so it is not necessary to include this as a dependency.
