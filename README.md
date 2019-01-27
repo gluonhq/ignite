@@ -1,4 +1,4 @@
-# Gluon Ignite
+# Gluon Ignite   [![Build Status](https://travis-ci.com/gluonhq/ignite.svg?branch=master)](https://travis-ci.com/gluonhq/ignite)
 Gluon Ignite allows developers to use popular dependency injection frameworks in their JavaFX applications, 
 including inside their FXML controllers. Gluon Ignite creates a common abstraction over several popular 
 dependency injection frameworks (currently _[Guice](https://github.com/google/guice), [Spring](https://spring.io/)_, 
