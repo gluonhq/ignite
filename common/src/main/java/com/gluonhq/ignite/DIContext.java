@@ -29,7 +29,7 @@ package com.gluonhq.ignite;
 
 
 /**
- * Common definition of Dependecy Injection Context
+ * Common definition of Dependency Injection Context
  */
 public interface DIContext {
 
