@@ -4,4 +4,6 @@ include 'common'
 include 'dagger'
 include 'guice'
 include 'spring'
+include 'micronaut'
+include 'micronaut'
 
