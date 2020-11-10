@@ -119,14 +119,14 @@ public class ContentView extends BorderPane {
     @Inject
     private StateView carStateView;
     // view      : example.view.StateView.java
-    // controller: example.view.StatController.java
+    // controller: example.view.StateController.java
     // fxml      : example/view/StateView.fxml
-    // stylesheet: example/view/StateView.cass
+    // stylesheet: example/view/StateView.css
 
     @PostConstruct
     private void init() {
         setCenter(navigationView);
-        setLeft(StateView.getRoot());
+        setLeft(carStateView.getRoot());
     }
 
 }
