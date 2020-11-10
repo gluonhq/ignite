@@ -10,9 +10,13 @@ import javax.inject.Inject;
 import java.io.IOException;
 
 /**
- * Implementation of the View, which automatically loads the related
- * FXML file by convention. FXML file should have same name as a view and be in the same package.
- * @param <T> ttype if the root node.
+ * Implementation of the View, which automatically loads the related XML file by convention.
+ * Actual view should conform to following requirements
+ * - inherit from FXMLView
+ * - FXML file should have exactly the same name, but with ".fxml" extension
+ * - The view and FXML file should be located in the same package
+ *
+ * @param <T> Root node type
  */
 public class FXMLView<T extends Parent> implements View<T> {
 
@@ -25,18 +29,15 @@ public class FXMLView<T extends Parent> implements View<T> {
        return rootProperty.getReadOnlyProperty();
     }
 
+    @Override
     public final T getRoot() {
-       return rootProperty().get();
+        return rootProperty().get();
     }
 
     @PostConstruct
     @SuppressWarnings("unchecked")
     private void init() {
-        try {
-            rootProperty.set((T) rootProvider.getRootByClass(this.getClass()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        rootProperty.set((T) rootProvider.getRootByClass(this.getClass()));
     }
 
 }

@@ -4,6 +4,8 @@ import io.micronaut.context.ApplicationContext;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -15,46 +17,43 @@ import java.util.Optional;
 @Singleton
 public class FXMLRootProvider {
 
+    private static final Logger LOG = LoggerFactory.getLogger(FXMLRootProvider.class);
+
     @Inject private ApplicationContext ctx;
+    @Inject FXMLLoader loader;
 
-    public Node getRootByClass(@NotBlank Class<?> controllerClass) throws IOException {
-        String viewName = getViewName(controllerClass);
+    public Node getRootByClass(@NotBlank Class<?> viewClass) {
+        String viewPath = getViewPath(viewClass);
 
-        // Load node from fxml file
-        FXMLLoader loader = new FXMLLoader();
-        loader.setControllerFactory(ctx::getBean);
+        String fxml = withExt(viewPath, "fxml");
+        Node node = null;
 
-        Node node = //ctx.getBean(FXMLLoader.class)
-            loader.load(controllerClass.getResourceAsStream(withExt(viewName, "fxml")));
+        try {
+            LOG.info("Attempting to load " + fxml);
+            node = loader.load(viewClass.getResourceAsStream(fxml));
+        } catch (IOException e) {
+            throw new RuntimeException("Could find resource " + fxml, e);
+        }
 
         // Make sure that CSS is added to a scene that node is going to be added to
         node.sceneProperty().addListener((o, oldScene, newScene) -> Optional.ofNullable(newScene)
                 .map(Scene::getStylesheets)
                 .ifPresent( stylesheets ->
-                Optional.ofNullable(controllerClass.getResource(withExt(viewName, "css")))
-                        .map(URL::toExternalForm)
-                        .filter(r -> !stylesheets.contains(r))
-                        .ifPresent(stylesheets::add)
-        ));
+                        Optional.ofNullable(viewClass.getResource(withExt(viewPath, "css")))
+                                .map(URL::toExternalForm)
+                                .filter(r -> !stylesheets.contains(r))
+                                .ifPresent(stylesheets::add)
+                ));
         return node;
     }
 
-    private String getViewName(@NotBlank Class<?> controllerClass) {
-        String className = removeSuffix(controllerClass.getName(), "Controller");
-        return addSuffix(className, "View").replace('.', '/');
+    private String getViewPath(@NotBlank Class<?> cls) {
+        return cls.getName().replace('.', '/');
     }
 
     private String withExt( @NotBlank String viewName, @NotBlank String extName ) {
         String ext = extName.startsWith(".")? extName: "." + extName;
         return String.format("/%s%s", viewName, ext);
-    }
-
-    private static String removeSuffix( String s, String suffix ) {
-        return s.endsWith(suffix)? s.substring(0, s.length() - suffix.length()): s;
-    }
-
-    private static String addSuffix( String s, String suffix ) {
-        return s.endsWith(suffix)? s: s + suffix;
     }
 
 }
