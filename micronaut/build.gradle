@@ -4,6 +4,8 @@ plugins {
     id "io.micronaut.application" version '1.0.5'
 }
 
+ext.description = 'Creates a common abstraction over Micronaut'
+
 group 'com.gluonhq'
 version '1.0.3-SNAPSHOT'
 
