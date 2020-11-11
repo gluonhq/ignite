@@ -41,8 +41,8 @@ public interface DIContext {
 
     /**
      * Create instance of given class
-     * @param cls
-     * @param <T>
+     * @param cls type
+     * @param <T> class type
      * @return resulting instance
      */
     <T> T getInstance(Class<T> cls);

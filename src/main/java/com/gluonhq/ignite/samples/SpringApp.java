@@ -25,49 +25,51 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.samples;
 
-
-import com.gluonhq.ignite.guice.GuiceContext;
-import com.google.inject.AbstractModule;
+import com.gluonhq.ignite.spring.SpringContext;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 
-public class GuiceApp extends Application implements ExampleApp {
+public class SpringApp extends Application implements ExampleApp {
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    private GuiceContext guiceContext = new GuiceContext(this, () -> Arrays.asList(new GuiceModule()));
+    private final SpringContext context = new SpringContext(this,
+            () -> Collections.singletonList(SpringApp.class.getPackage().getName()));
+
 
     @Inject
     FXMLLoader fxmlLoader;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        guiceContext.init();
+        context.init();
         fxmlLoader.setLocation(getViewLocation());
         Parent view = fxmlLoader.load();
 
-        primaryStage.setTitle("Guice Example");
+        primaryStage.setTitle("Spring Example");
         primaryStage.setScene(new Scene(view));
         primaryStage.show();
     }
-
-
 }
 
-class GuiceModule extends AbstractModule {
-    @Override
-    protected void configure() {
-//        bind(Service.class).to(Service.class);
+@Configuration
+class SpringConfig  {
+    @Bean
+    public Service provideService() {
+        return new Service();
     }
 }
+

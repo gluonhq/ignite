@@ -1,7 +1,5 @@
 plugins {
     id 'java'
-//    id: 'application'
-    id "io.micronaut.application" version '1.0.5'
 }
 
 ext.description = 'Creates a common abstraction over Micronaut'
@@ -14,29 +12,19 @@ repositories {
     jcenter()
 }
 
-application {
-    mainClass = "com.gluonhq.ignite.micronaut.FXApplication"
+ext {
+    mnversion = "2.1.3"
 }
-
-micronaut {
-    version "2.1.3"
-//    mainClass = "com.gluonhq.ignite.micronaut.FXApplication"
-    testRuntime "junit5"
-    processing {
-        incremental true
-//        annotations "com.example.*"
-    }
-}
-
 
 
 dependencies {
 
-    implementation("io.micronaut:micronaut-validation")
-    implementation("io.micronaut:micronaut-runtime")
+    annotationProcessor "io.micronaut:micronaut-inject-java:$mnversion"
+    implementation "io.micronaut:micronaut-inject:$mnversion"
+    implementation("io.micronaut:micronaut-validation:$mnversion")
+    implementation("io.micronaut:micronaut-runtime:$mnversion")
     implementation("javax.annotation:javax.annotation-api")
-//    implementation("io.micronaut:micronaut-http-client")
-    runtimeOnly("ch.qos.logback:logback-classic")
+    runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

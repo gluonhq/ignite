@@ -1,3 +1,4 @@
+package com.gluonhq.ignite.samples;
 /*
  * Copyright (c) 2020, Gluon
  *
@@ -25,8 +26,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.samples;
 
+import javax.inject.Singleton;
+
+@Singleton
 public class Service {
 
     public String getText() {

@@ -78,8 +78,7 @@ public class DaggerContext implements DIContext {
      * {@inheritDoc}
      */
     public final void init() {
-        Collection<Object> allModules = new HashSet<>();
-        allModules.addAll(modules.get());
+        Collection<Object> allModules = new HashSet<>(modules.get());
         allModules.add(new FXModule());
         injector = ObjectGraph.create(allModules.toArray());
         injectMembers(contextRoot);
@@ -89,7 +88,6 @@ public class DaggerContext implements DIContext {
     class FXModule  {
 
         @Provides
-//        @Singleton
         FXMLLoader provideFxmlLoader() {
             FXMLLoader loader = new FXMLLoader();
             loader.setControllerFactory(DaggerContext.this::getInstance);

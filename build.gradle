@@ -1,7 +1,9 @@
 plugins {
     id 'java'
+    id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.8'
     id "com.github.hierynomus.license" version "0.15.0"
+    id "io.micronaut.application" version '1.0.5'
 }
 
 group = 'com.gluonhq'
@@ -9,11 +11,28 @@ version = '1.0.3-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 apply from: 'gradle/codeQuality.gradle'
 
 sourceCompatibility = JavaVersion.VERSION_11
+
+application {
+//    mainClass = "com.gluonhq.ignite.samples.DaggerApp"
+//    mainClass = "com.gluonhq.ignite.samples.GuiceApp"
+//    mainClass = "com.gluonhq.ignite.samples.SpringApp"
+    mainClass = "com.gluonhq.ignite.micronaut.FXApplication"
+}
+
+micronaut {
+    version = "2.1.3"
+}
+
+javafx {
+    version = "15"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
 
 subprojects {
     apply plugin: 'java'
@@ -53,9 +72,17 @@ subprojects {
 }
 
 dependencies {
+
+    /// for micronaut sample
+    implementation("io.micronaut:micronaut-runtime")
+
+    // to compile sample DaggerModule
+    annotationProcessor 'com.squareup.dagger:dagger-compiler:1.2.5'
+
     compile project(':dagger')
     compile project(':guice')
     compile project(':spring')
     compile project(':micronaut')
     compile project(':common')
+
 }

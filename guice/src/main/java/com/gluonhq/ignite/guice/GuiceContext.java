@@ -28,6 +28,7 @@
 package com.gluonhq.ignite.guice;
 
 import com.gluonhq.ignite.DIContext;
+import com.google.inject.Module;
 import com.google.inject.*;
 import javafx.fxml.FXMLLoader;
 
@@ -77,10 +78,9 @@ public class GuiceContext implements DIContext {
      * {@inheritDoc}
      */
     public final void init() {
-        Collection<Object> allModules = new HashSet<>();
-        allModules.addAll(this.modules.get());
-        allModules.add(new FXModule());
-        injector = Guice.createInjector(allModules.toArray(new Module[0]));
+        Collection<Module> uniqueModules = new HashSet<>(this.modules.get());
+        uniqueModules.add(new FXModule());
+        injector = Guice.createInjector(uniqueModules.toArray(new Module[0]));
         injectMembers(contextRoot);
     }
 
@@ -90,7 +90,6 @@ public class GuiceContext implements DIContext {
         protected void configure() {}
 
         @Provides
-//        @Singleton
         FXMLLoader provideFxmlLoader() {
             FXMLLoader loader = new FXMLLoader();
             loader.setControllerFactory(GuiceContext.this::getInstance);

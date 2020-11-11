@@ -25,56 +25,25 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.samples;
 
-
-import com.gluonhq.ignite.dagger.DaggerContext;
-import dagger.Module;
-import dagger.Provides;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 
 import javax.inject.Inject;
-import java.io.IOException;
-import java.util.Arrays;
+import javax.inject.Singleton;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class DaggerApp extends Application implements ExampleApp {
+public class ViewController implements Initializable {
 
-    private final DaggerContext context = new DaggerContext(this, () -> Arrays.asList(new DaggerModule()));
-
-    @Inject
-    FXMLLoader fxmlLoader;
-
-    public static void main(String[] args) {
-        launch(args);
-    }
+    @Inject Service service;
+    @FXML Label label;
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-
-        context.init();
-
-        fxmlLoader.setLocation( getViewLocation());
-        Parent view = fxmlLoader.load();
-
-        primaryStage.setTitle("Dagger Example");
-        primaryStage.setScene(new Scene(view));
-        primaryStage.show();
-
+    public void initialize(URL location, ResourceBundle resources) {
+        label.setText(service.getText());
     }
 
 }
-
-@Module( library = true, injects = {DaggerApp.class,ViewController.class}, complete = false)
-class DaggerModule  {
-
-    @Provides
-    public Service provideService() {
-        return new Service();
-    }
-
-}
-
