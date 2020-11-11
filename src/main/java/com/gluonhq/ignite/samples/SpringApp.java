@@ -1,4 +1,4 @@
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.samples;
 
 import com.gluonhq.ignite.spring.SpringContext;
 import javafx.application.Application;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 
 public class SpringApp extends Application implements ExampleApp {
 
@@ -19,7 +19,8 @@ public class SpringApp extends Application implements ExampleApp {
         launch(args);
     }
 
-    private SpringContext context = new SpringContext(this, () -> Arrays.asList(SpringApp.class.getPackage().getName()));
+    private final SpringContext context = new SpringContext(this,
+            () -> Collections.singletonList(SpringApp.class.getPackage().getName()));
 
 
     @Inject

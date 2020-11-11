@@ -1,8 +1,7 @@
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.samples;
 
 
 import com.gluonhq.ignite.dagger.DaggerContext;
-import dagger.Module;
 import dagger.Provides;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,11 +11,11 @@ import javafx.stage.Stage;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 
 public class DaggerApp extends Application implements ExampleApp {
 
-    private final DaggerContext context = new DaggerContext(this, () -> Arrays.asList(new DaggerModule()));
+    private final DaggerContext context = new DaggerContext(this, () -> Collections.singletonList(new DaggerModule()));
 
     @Inject
     FXMLLoader fxmlLoader;
@@ -41,7 +40,7 @@ public class DaggerApp extends Application implements ExampleApp {
 
 }
 
-@Module( library = true, injects = {DaggerApp.class,ViewController.class}, complete = false)
+@dagger.Module( library = true, injects = {DaggerApp.class,ViewController.class}, complete = false)
 class DaggerModule  {
 
     @Provides

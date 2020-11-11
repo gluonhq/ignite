@@ -1,4 +1,4 @@
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.samples;
 
 
 import com.gluonhq.ignite.guice.GuiceContext;
@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 
 public class GuiceApp extends Application implements ExampleApp {
 
@@ -19,7 +19,7 @@ public class GuiceApp extends Application implements ExampleApp {
         launch(args);
     }
 
-    private GuiceContext guiceContext = new GuiceContext(this, () -> Arrays.asList(new GuiceModule()));
+    private final GuiceContext guiceContext = new GuiceContext(this, () -> Collections.singletonList(new GuiceModule()));
 
     @Inject
     FXMLLoader fxmlLoader;

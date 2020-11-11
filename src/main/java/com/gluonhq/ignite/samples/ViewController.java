@@ -1,10 +1,11 @@
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.samples;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -17,6 +18,5 @@ public class ViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         label.setText(service.getText());
     }
-
 
 }

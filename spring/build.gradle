@@ -1,5 +1,5 @@
 dependencies {
-    compile 'org.springframework:spring-context:4.2.1.RELEASE'
+    compile 'org.springframework:spring-context:5.3.1'
     compile 'cglib:cglib:3.1'
     compile project(':common')
 }

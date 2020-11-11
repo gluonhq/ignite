@@ -1,5 +1,8 @@
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.samples;
 
+import javax.inject.Singleton;
+
+@Singleton
 public class Service {
 
     public String getText() {
