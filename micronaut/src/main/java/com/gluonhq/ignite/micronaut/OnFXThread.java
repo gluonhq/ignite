@@ -12,6 +12,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Around
-@Type(com.gluonhq.ignite.micronaut.OnFxThreadInterceptor.class)
+@Type(OnFXThreadInterceptor.class)
 public @interface OnFXThread {
 }

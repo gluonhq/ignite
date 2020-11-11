@@ -7,7 +7,7 @@ import javafx.application.Platform;
 import javax.inject.Singleton;
 
 @Singleton
-class OnFxThreadInterceptor implements MethodInterceptor<Object, Object> {
+class OnFXThreadInterceptor implements MethodInterceptor<Object, Object> {
     @Override
     public Object intercept(MethodInvocationContext<Object, Object> context) {
         if ( !Platform.isFxApplicationThread() ) {
