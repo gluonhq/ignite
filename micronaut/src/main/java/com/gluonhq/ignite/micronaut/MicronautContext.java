@@ -17,7 +17,7 @@ public final class MicronautContext implements DIContext {
      * @param contextRoot root object to inject
      */
     public MicronautContext( Object contextRoot ) {
-        injectMembers( Objects.requireNonNull(contextRoot));
+        injectMembers(contextRoot);
     }
 
     /**
@@ -25,7 +25,7 @@ public final class MicronautContext implements DIContext {
      */
     @Override
     public void injectMembers(Object instance) {
-        appContext.inject(instance);
+        appContext.inject(Objects.requireNonNull(instance));
     }
 
     /**
@@ -33,6 +33,6 @@ public final class MicronautContext implements DIContext {
      */
     @Override
     public <T> T getInstance(Class<T> cls) {
-        return appContext.getBean(cls);
+        return appContext.getBean(Objects.requireNonNull(cls));
     }
 }
