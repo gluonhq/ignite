@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import javax.inject.Singleton;
 import java.util.Optional;
 
-@Singleton
 public final class FXApplication extends javafx.application.Application {
 
     private final ApplicationContext appContext = ApplicationContext.build().start();

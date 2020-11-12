@@ -26,5 +26,7 @@ dependencies {
     implementation("javax.annotation:javax.annotation-api")
     runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
 
+    compile project(':common')
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

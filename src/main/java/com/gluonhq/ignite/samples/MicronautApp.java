@@ -18,16 +18,9 @@ public class MicronautApp {
 
     @EventListener
     void onAppStart(FXApplication.StartEvent event) {
-
         Stage primaryStage = event.getStage();
         primaryStage.setTitle("Micronaut Example");
         primaryStage.setScene(new Scene(view.getRoot()));
         primaryStage.show();
-
     }
-
 }
-
-// View.xml is automatically loaded
-@Singleton
-class View extends FXMLView<BorderPane> {}
