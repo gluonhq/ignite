@@ -19,7 +19,9 @@ application {
 //    mainClass = "com.gluonhq.ignite.samples.DaggerApp"
 //    mainClass = "com.gluonhq.ignite.samples.GuiceApp"
 //    mainClass = "com.gluonhq.ignite.samples.SpringApp"
+
     mainClass = "com.gluonhq.ignite.micronaut.FXApplication"
+//    mainClass = "com.gluonhq.ignite.samples.MicronautContextApp"
 }
 
 micronaut {

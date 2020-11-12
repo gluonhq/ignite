@@ -44,14 +44,16 @@ it can be easily set up to work with those frameworks instead.
 
 ### Micronaut support
 
-Ignite implementation for Micronaut differs from the other implementations, and has much deeper integration with Micronaut framework.
+Ignite implementation for Micronaut provides much deeper integration with Micronaut framework.
 
 #### _Application main class_
 
-Ignite Micronaut provides a special implementation of JavaFX `Application` class, 
-which has to be configured as your main class: `com.gluonhq.ignite.micronaut.FXApplication`. 
-As an application developer, you just have to implement an entry point into your application, 
-which will be picked up by Micronaut automatically, since it is a normal bean class. 
+On top of common, for Ignite, implementation of `DIContext` interface, Ignite Micronaut provides 
+special implementation of JavaFX `Application` class, which can to be configured 
+as your main class: `com.gluonhq.ignite.micronaut.FXApplication`.
+This makes the code a lot cleaner. As an application developer, you just have to implement 
+an entry point into your application, which will be picked up by Micronaut automatically, 
+since it is a normal Micronaut bean. 
 
 Here is a simple example:
 ```java
