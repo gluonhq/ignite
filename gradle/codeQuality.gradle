@@ -25,12 +25,16 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.gluonhq.ignite;
 
-public class Service {
+apply plugin: 'com.github.hierynomus.license'
 
-    public String getText() {
-        return "This text is INJECTED";
+license {
+    header = rootProject.file('gradle/HEADER')
+    strictCheck = true
+    ignoreFailures = true
+    mapping {
+        java = 'SLASHSTAR_STYLE'
+        fxml = 'XML_STYLE'
     }
-
+    ext.year = java.time.Year.now().value
 }
