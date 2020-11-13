@@ -4,6 +4,7 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.8'
     id "com.github.hierynomus.license" version "0.15.0"
     id "io.micronaut.application" version '1.0.5'
+    id "maven"
 }
 
 group = 'com.gluonhq'
