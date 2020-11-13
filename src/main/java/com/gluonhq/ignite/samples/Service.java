@@ -1,4 +1,3 @@
-package com.gluonhq.ignite.samples;
 /*
  * Copyright (c) 2020, Gluon
  *
