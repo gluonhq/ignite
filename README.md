@@ -2,9 +2,9 @@
 Gluon Ignite allows developers to use popular dependency injection frameworks in their JavaFX applications, 
 including inside their FXML controllers. Gluon Ignite creates a common abstraction over several popular 
 dependency injection frameworks (currently _[Guice](https://github.com/google/guice), [Spring](https://spring.io/)_, 
-, and _[Dagger](https://square.github.io/dagger/)_). 
+and _[Dagger](https://square.github.io/dagger/)_). 
 
-Since v.1.3 we also added an extended support for and [Microunaut](https://micronaut.io). Read further for more details.  
+Since v.1.1.0 we also added an extended support for and [Microunaut](https://micronaut.io). Read further for more details.  
 
 With full support of [JSR-330](https://www.jcp.org/en/jsr/detail?id=330), Gluon Ignite makes using dependency injection in JavaFX applications trivial. 
 Here is a quick example of creating an application using the Guice framework and Gluon Ignite.
