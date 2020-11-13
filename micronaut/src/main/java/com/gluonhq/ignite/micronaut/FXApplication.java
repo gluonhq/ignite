@@ -25,39 +25,55 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.micronaut;
 
+import io.micronaut.context.ApplicationContext;
+import io.micronaut.context.LifeCycle;
+import io.micronaut.context.event.ApplicationEventPublisher;
+import javafx.stage.Stage;
 
-/**
- * Common definition of Dependency Injection Context
- */
-public interface DIContext {
+import java.util.Optional;
 
-    /**
-     * Injects members into given instance
-     * @param instance instance to inject members into
-     */
-    void injectMembers(Object instance);
+public final class FXApplication extends javafx.application.Application {
 
-    /**
-     * Create instance of given class
-     * @param cls type
-     * @param <T> class type
-     * @return resulting instance
-     */
-    <T> T getInstance(Class<T> cls);
+    private final ApplicationContext appContext = ApplicationContext.build().start();
+    private final ApplicationEventPublisher publisher = appContext.getBean(ApplicationEventPublisher.class);
 
-    /**
-     * Context initialization
-     */
-    default void init() {
-        // no-op
+    @Override
+    public void init()  {
+        publisher.publishEvent(new InitEvent());
     }
 
-    /**
-     * Context disposal
-     */
-    default void dispose() {
-        // no-op
+    @Override
+    public void start(Stage primaryStage) {
+        publisher.publishEvent(new StartEvent(primaryStage));
     }
+
+    @Override
+    public void stop() {
+        publisher.publishEvent(new StopEvent());
+        Optional.of(appContext)
+                .filter(LifeCycle::isRunning)
+                .ifPresent(ApplicationContext::stop);
+    }
+
+    public static class InitEvent{}
+
+    public static class StartEvent {
+        private final Stage stage;
+
+        public StartEvent(Stage stage) {
+            this.stage = stage;
+        }
+
+        public Stage getStage() {
+            return stage;
+        }
+    }
+
+    public static class StopEvent{}
+
 }
+
+
+

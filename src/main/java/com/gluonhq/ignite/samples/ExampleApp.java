@@ -25,39 +25,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.samples;
 
+import java.net.URL;
 
-/**
- * Common definition of Dependency Injection Context
- */
-public interface DIContext {
+public interface ExampleApp {
 
-    /**
-     * Injects members into given instance
-     * @param instance instance to inject members into
-     */
-    void injectMembers(Object instance);
-
-    /**
-     * Create instance of given class
-     * @param cls type
-     * @param <T> class type
-     * @return resulting instance
-     */
-    <T> T getInstance(Class<T> cls);
-
-    /**
-     * Context initialization
-     */
-    default void init() {
-        // no-op
-    }
-
-    /**
-     * Context disposal
-     */
-    default void dispose() {
-        // no-op
+    default URL getViewLocation() {
+        return getClass().getResource("/com/gluonhq/ignite/samples/View.fxml");
     }
 }

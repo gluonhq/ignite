@@ -25,39 +25,22 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.micronaut;
 
+import io.micronaut.aop.MethodInterceptor;
+import io.micronaut.aop.MethodInvocationContext;
+import javafx.application.Platform;
 
-/**
- * Common definition of Dependency Injection Context
- */
-public interface DIContext {
+import javax.inject.Singleton;
 
-    /**
-     * Injects members into given instance
-     * @param instance instance to inject members into
-     */
-    void injectMembers(Object instance);
-
-    /**
-     * Create instance of given class
-     * @param cls type
-     * @param <T> class type
-     * @return resulting instance
-     */
-    <T> T getInstance(Class<T> cls);
-
-    /**
-     * Context initialization
-     */
-    default void init() {
-        // no-op
-    }
-
-    /**
-     * Context disposal
-     */
-    default void dispose() {
-        // no-op
+@Singleton
+class OnFXThreadInterceptor implements MethodInterceptor<Object, Object> {
+    @Override
+    public Object intercept(MethodInvocationContext<Object, Object> context) {
+        if ( !Platform.isFxApplicationThread() ) {
+            Platform.runLater(context::proceed);
+            return null;
+        }
+        return context.proceed();
     }
 }

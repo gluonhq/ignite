@@ -37,6 +37,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -50,7 +51,7 @@ public class SpringContext implements DIContext {
     private final Object contextRoot;
     private AnnotationConfigApplicationContext appContext;
 
-    private Supplier<Collection<String>> scanPackages;
+    private final Supplier<Collection<String>> scanPackages;
 
     /**
      * Create the Spring context
@@ -85,12 +86,11 @@ public class SpringContext implements DIContext {
     @Override
     public final void init() {
 
-        HashSet<String> packages = new HashSet<>();
-        packages.addAll(scanPackages.get());
+        String[] uniquePackages = new HashSet<>(scanPackages.get()).toArray(new String[0]);
 
         appContext = new AnnotationConfigApplicationContext();
         appContext.register(FXModule.class);
-        appContext.scan(packages.toArray(new String[0]));
+        appContext.scan(uniquePackages);
         appContext.refresh();
 
         injectMembers(contextRoot);
@@ -113,10 +113,9 @@ class FXModule implements ApplicationContextAware {
     @Scope("prototype")
     public FXMLLoader provideFxmlLoader() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setControllerFactory(type -> SpringUtils.<Object>getInstance(appContext, (Class<Object>) type));
+        loader.setControllerFactory(type -> SpringUtils.getInstance(appContext, type));
         return loader;
     }
-
 
 }
 
@@ -132,10 +131,10 @@ class SpringUtils {
     public static <T> T getInstance(ApplicationContext appContext, Class<T> type) {
         T instance = null;
         try {
-            instance = type.newInstance();
+            instance = type.getDeclaredConstructor().newInstance();
             injectMembers(appContext, instance);
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            throw new RuntimeException("Cannot create instance of specified class:  " + type.getName(),e);
         }
         return instance;
     }

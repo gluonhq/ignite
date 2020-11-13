@@ -25,39 +25,29 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.samples;
 
+import com.gluonhq.ignite.micronaut.FXApplication;
+import com.gluonhq.ignite.micronaut.view.FXMLView;
+import io.micronaut.runtime.event.annotation.EventListener;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
-/**
- * Common definition of Dependency Injection Context
- */
-public interface DIContext {
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
-    /**
-     * Injects members into given instance
-     * @param instance instance to inject members into
-     */
-    void injectMembers(Object instance);
+@Singleton
+public class MicronautApp {
 
-    /**
-     * Create instance of given class
-     * @param cls type
-     * @param <T> class type
-     * @return resulting instance
-     */
-    <T> T getInstance(Class<T> cls);
+    @Inject
+    View view;
 
-    /**
-     * Context initialization
-     */
-    default void init() {
-        // no-op
-    }
-
-    /**
-     * Context disposal
-     */
-    default void dispose() {
-        // no-op
+    @EventListener
+    void onAppStart(FXApplication.StartEvent event) {
+        Stage primaryStage = event.getStage();
+        primaryStage.setTitle("Micronaut Example");
+        primaryStage.setScene(new Scene(view.getRoot()));
+        primaryStage.show();
     }
 }

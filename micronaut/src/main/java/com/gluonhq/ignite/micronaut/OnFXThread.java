@@ -25,39 +25,20 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.micronaut;
 
+import io.micronaut.aop.Around;
+import io.micronaut.context.annotation.Type;
+
+import java.lang.annotation.*;
 
 /**
- * Common definition of Dependency Injection Context
+ * Forces a method to run on JavaFX Application Thread
  */
-public interface DIContext {
-
-    /**
-     * Injects members into given instance
-     * @param instance instance to inject members into
-     */
-    void injectMembers(Object instance);
-
-    /**
-     * Create instance of given class
-     * @param cls type
-     * @param <T> class type
-     * @return resulting instance
-     */
-    <T> T getInstance(Class<T> cls);
-
-    /**
-     * Context initialization
-     */
-    default void init() {
-        // no-op
-    }
-
-    /**
-     * Context disposal
-     */
-    default void dispose() {
-        // no-op
-    }
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE, ElementType.METHOD})
+@Around
+@Type(OnFXThreadInterceptor.class)
+public @interface OnFXThread {
 }

@@ -25,25 +25,34 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.samples;
 
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import com.gluonhq.ignite.micronaut.MicronautContext;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import javax.inject.Inject;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class ViewController implements Initializable {
+public class MicronautContextApp extends Application {
 
-    @Inject Service service;
-    @FXML Label label;
+    @Inject
+    View view;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        label.setText(service.getText());
+    public void init() throws Exception {
+        // Create Micronaut context to initialize the app and make Application injectable
+        new MicronautContext(this);
     }
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("Micronaut Context Example");
+        primaryStage.setScene(new Scene(view.getRoot()));
+        primaryStage.show();
+    }
 
 }
+
+
+

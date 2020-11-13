@@ -25,39 +25,51 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.samples;
 
+import com.gluonhq.ignite.spring.SpringContext;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-/**
- * Common definition of Dependency Injection Context
- */
-public interface DIContext {
+import javax.inject.Inject;
+import java.io.IOException;
+import java.util.Collections;
 
-    /**
-     * Injects members into given instance
-     * @param instance instance to inject members into
-     */
-    void injectMembers(Object instance);
+public class SpringApp extends Application implements ExampleApp {
 
-    /**
-     * Create instance of given class
-     * @param cls type
-     * @param <T> class type
-     * @return resulting instance
-     */
-    <T> T getInstance(Class<T> cls);
-
-    /**
-     * Context initialization
-     */
-    default void init() {
-        // no-op
+    public static void main(String[] args) {
+        launch(args);
     }
 
-    /**
-     * Context disposal
-     */
-    default void dispose() {
-        // no-op
+    private final SpringContext context = new SpringContext(this,
+            () -> Collections.singletonList(SpringApp.class.getPackage().getName()));
+
+
+    @Inject
+    FXMLLoader fxmlLoader;
+
+    @Override
+    public void start(Stage primaryStage) throws IOException {
+        context.init();
+        fxmlLoader.setLocation(getViewLocation());
+        Parent view = fxmlLoader.load();
+
+        primaryStage.setTitle("Spring Example");
+        primaryStage.setScene(new Scene(view));
+        primaryStage.show();
     }
 }
+
+@Configuration
+class SpringConfig  {
+    @Bean
+    public Service provideService() {
+        return new Service();
+    }
+}
+

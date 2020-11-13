@@ -25,39 +25,49 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.samples;
 
 
-/**
- * Common definition of Dependency Injection Context
- */
-public interface DIContext {
+import com.gluonhq.ignite.guice.GuiceContext;
+import com.google.inject.AbstractModule;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-    /**
-     * Injects members into given instance
-     * @param instance instance to inject members into
-     */
-    void injectMembers(Object instance);
+import javax.inject.Inject;
+import java.io.IOException;
+import java.util.Collections;
 
-    /**
-     * Create instance of given class
-     * @param cls type
-     * @param <T> class type
-     * @return resulting instance
-     */
-    <T> T getInstance(Class<T> cls);
+public class GuiceApp extends Application implements ExampleApp {
 
-    /**
-     * Context initialization
-     */
-    default void init() {
-        // no-op
+    public static void main(String[] args) {
+        launch(args);
     }
 
-    /**
-     * Context disposal
-     */
-    default void dispose() {
-        // no-op
+    private final GuiceContext guiceContext = new GuiceContext(this, () -> Collections.singletonList(new GuiceModule()));
+
+    @Inject
+    FXMLLoader fxmlLoader;
+
+    @Override
+    public void start(Stage primaryStage) throws IOException {
+        guiceContext.init();
+        fxmlLoader.setLocation(getViewLocation());
+        Parent view = fxmlLoader.load();
+
+        primaryStage.setTitle("Guice Example");
+        primaryStage.setScene(new Scene(view));
+        primaryStage.show();
+    }
+
+
+}
+
+class GuiceModule extends AbstractModule {
+    @Override
+    protected void configure() {
+//        bind(Service.class).to(Service.class);
     }
 }

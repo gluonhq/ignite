@@ -25,39 +25,25 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.micronaut;
 
+import io.micronaut.context.ApplicationContext;
+import io.micronaut.context.annotation.Factory;
+import io.micronaut.context.annotation.Prototype;
+import javafx.fxml.FXMLLoader;
 
-/**
- * Common definition of Dependency Injection Context
- */
-public interface DIContext {
+import javax.inject.Inject;
 
-    /**
-     * Injects members into given instance
-     * @param instance instance to inject members into
-     */
-    void injectMembers(Object instance);
+@Factory
+public class FXMLLoaderFactory {
 
-    /**
-     * Create instance of given class
-     * @param cls type
-     * @param <T> class type
-     * @return resulting instance
-     */
-    <T> T getInstance(Class<T> cls);
+    @Inject private ApplicationContext ctx;
 
-    /**
-     * Context initialization
-     */
-    default void init() {
-        // no-op
+    @Prototype
+    public FXMLLoader getLoader() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setControllerFactory(ctx::getBean);
+        return loader;
     }
 
-    /**
-     * Context disposal
-     */
-    default void dispose() {
-        // no-op
-    }
 }

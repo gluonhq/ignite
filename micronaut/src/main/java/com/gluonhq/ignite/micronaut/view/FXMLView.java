@@ -25,39 +25,45 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.gluonhq.ignite;
+package com.gluonhq.ignite.micronaut.view;
 
+import com.gluonhq.ignite.micronaut.FXMLRootProvider;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.scene.Parent;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 /**
- * Common definition of Dependency Injection Context
+ * Implementation of the View, which automatically loads the related XML file by convention.
+ * Actual view should conform to following requirements
+ * - inherit from FXMLView
+ * - FXML file should have exactly the same name, but with ".fxml" extension
+ * - The view and FXML file should be located in the same package
+ *
+ * @param <T> Root node type
  */
-public interface DIContext {
+public class FXMLView<T extends Parent> implements View<T> {
 
-    /**
-     * Injects members into given instance
-     * @param instance instance to inject members into
-     */
-    void injectMembers(Object instance);
+    @Inject
+    private FXMLRootProvider rootProvider;
 
-    /**
-     * Create instance of given class
-     * @param cls type
-     * @param <T> class type
-     * @return resulting instance
-     */
-    <T> T getInstance(Class<T> cls);
-
-    /**
-     * Context initialization
-     */
-    default void init() {
-        // no-op
+    // rootProperty
+    private final ReadOnlyObjectWrapper<T> rootProperty = new ReadOnlyObjectWrapper<>(this, "root");
+    public ReadOnlyObjectProperty<T> rootProperty() {
+       return rootProperty.getReadOnlyProperty();
     }
 
-    /**
-     * Context disposal
-     */
-    default void dispose() {
-        // no-op
+    @Override
+    public final T getRoot() {
+        return rootProperty().get();
     }
+
+    @PostConstruct
+    @SuppressWarnings("unchecked")
+    private void init() {
+        rootProperty.set((T) rootProvider.getRootByClass(this.getClass()));
+    }
+
 }
