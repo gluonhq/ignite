@@ -1,10 +1,18 @@
-# Gluon Ignite   [![Build Status](https://travis-ci.com/gluonhq/ignite.svg?branch=master)](https://travis-ci.com/gluonhq/ignite)
+# Gluon Ignite 
+
+[![xxx](https://img.shields.io/maven-central/v/com.gluonhq/ignite-dagger.svg?label=ignite-dagger)](https://search.maven.org/artifact/com.gluonhq/ignite-dagger)
+[![xxx](https://img.shields.io/maven-central/v/com.gluonhq/ignite-guice.svg?label=ignite-guice)](https://search.maven.org/artifact/com.gluonhq/ignite-guice)
+[![xxx](https://img.shields.io/maven-central/v/com.gluonhq/ignite-spring.svg?label=ignite-spring)](https://search.maven.org/artifact/com.gluonhq/ignite-spring)
+[![xxx](https://img.shields.io/maven-central/v/com.gluonhq/ignite-micronaut.svg?label=ignite-micronaut)](https://search.maven.org/artifact/com.gluonhq/ignite-micronaut)
+
 Gluon Ignite allows developers to use popular dependency injection frameworks in their JavaFX applications, 
 including inside their FXML controllers. Gluon Ignite creates a common abstraction over several popular 
 dependency injection frameworks (currently _[Guice](https://github.com/google/guice), [Spring](https://spring.io/)_, 
 and _[Dagger](https://square.github.io/dagger/)_). 
 
-Since v.1.1.0 we also added an extended support for and [Microunaut](https://micronaut.io). Read further for more details.  
+Since `v1.1.0` we also added an extended support for [Microunaut](https://micronaut.io). Read further for more details.  
+
+
 
 With full support of [JSR-330](https://www.jcp.org/en/jsr/detail?id=330), Gluon Ignite makes using dependency injection in JavaFX applications trivial. 
 Here is a quick example of creating an application using the Guice framework and Gluon Ignite.
@@ -39,7 +47,7 @@ class GuiceModule extends AbstractModule {
 ```
 By using Gluon Ignite, you not only get dependency injection inside your application class, but also 
 within your FXML controllers too. Even though the sample above shows a Guice context, as mentioned 
-Gluon Ignite also supports other DI frameworks. By using a DaggerContext or SpringContext in your application, 
+Gluon Ignite also supports other DI frameworks. By using a `DaggerContext` or `SpringContext` in your application, 
 it can be easily set up to work with those frameworks instead.
 
 ### Micronaut support
@@ -158,14 +166,12 @@ class SimpleLoad {
 ### How to use Gluon Ignite
 
 To use Gluon Ignite in your software, simply include it as a dependency in your preferred dependency manager. 
-All artifacts are availble in Maven Central:
+All artifacts are available in Maven Central:
 
-| Artifact Name | Version |
-| ------------- | ------------- |
-| Ignite Dagger | [![xxx](https://img.shields.io/maven-central/v/com.gluonhq/ignite-dagger.svg)](https://search.maven.org/artifact/com.gluonhq/ignite-dagger)  |
-| Ignite Guice  | [![xxx](https://img.shields.io/maven-central/v/com.gluonhq/ignite-guice.svg)](https://search.maven.org/artifact/com.gluonhq/ignite-guice)  |
-| Ignite Spring | [![xxx](https://img.shields.io/maven-central/v/com.gluonhq/ignite-spring.svg)](https://search.maven.org/artifact/com.gluonhq/ignite-spring)  |
-| Ignite Micronaut | [![xxx](https://img.shields.io/maven-central/v/com.gluonhq/ignite-micronaut.svg)](https://search.maven.org/artifact/com.gluonhq/ignite-micronaut)  |
+[![xxx](https://img.shields.io/maven-central/v/com.gluonhq/ignite-dagger.svg?label=ignite-dagger)](https://search.maven.org/artifact/com.gluonhq/ignite-dagger)
+[![xxx](https://img.shields.io/maven-central/v/com.gluonhq/ignite-guice.svg?label=ignite-guice)](https://search.maven.org/artifact/com.gluonhq/ignite-guice)
+[![xxx](https://img.shields.io/maven-central/v/com.gluonhq/ignite-spring.svg?label=ignite-spring)](https://search.maven.org/artifact/com.gluonhq/ignite-spring)
+[![xxx](https://img.shields.io/maven-central/v/com.gluonhq/ignite-micronaut.svg?label=ignite-micronaut)](https://search.maven.org/artifact/com.gluonhq/ignite-micronaut)
 
 > Note that `ignite-common` is automatically included as a dependency for each module, 
 so it is not necessary to include this as a dependency.
