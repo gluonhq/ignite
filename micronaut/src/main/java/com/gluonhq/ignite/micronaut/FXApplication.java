@@ -57,6 +57,10 @@ public final class FXApplication extends javafx.application.Application {
                 .ifPresent(ApplicationContext::stop);
     }
 
+    public static void main(String[] args) {
+        javafx.application.Application.launch(args);
+    }
+
     public static class InitEvent{}
 
     public static class StartEvent {
