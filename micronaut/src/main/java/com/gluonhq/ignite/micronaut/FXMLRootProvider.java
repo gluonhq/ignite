@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, Gluon
+ * Copyright (c) 2020, 2021, Gluon
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@
 package com.gluonhq.ignite.micronaut;
 
 import io.micronaut.context.ApplicationContext;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import org.slf4j.Logger;
@@ -47,7 +46,7 @@ public class FXMLRootProvider {
     private static final Logger LOG = LoggerFactory.getLogger(FXMLRootProvider.class);
 
     @Inject private ApplicationContext ctx;
-    @Inject FXMLLoader loader;
+    @Inject FXMLLoaderFactory loaderFactory;
 
     public Node getRootByClass(@NotBlank Class<?> viewClass) {
         String viewPath = getViewPath(viewClass);
@@ -56,9 +55,9 @@ public class FXMLRootProvider {
 
         try {
             LOG.info("Attempting to load " + fxml);
-            node = loader.load(viewClass.getResourceAsStream(fxml));
+            node = loaderFactory.getLoader().load(viewClass.getResourceAsStream(fxml));
         } catch (IOException e) {
-            throw new RuntimeException("Could find resource " + fxml, e);
+            throw new RuntimeException("Error loading resource " + fxml, e);
         }
 
         // Make sure that CSS is added to a scene that node is going to be added to
