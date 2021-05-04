@@ -128,6 +128,13 @@ private configurePOM(def pom) {
             }
         }
     }
+    // Remove JavaFX dependencies
+    pom.withXml {
+        def root = asNode()
+        root.dependencies.'*'
+                .findAll() { it.groupId.text() == 'org.openjfx' }
+                .each { it.parent().remove(it) }
+    }
 }
 
 ext.checkPasswords =  {
