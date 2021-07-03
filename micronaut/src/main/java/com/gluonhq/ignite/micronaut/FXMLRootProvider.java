@@ -46,12 +46,12 @@ public class FXMLRootProvider {
     private static final Logger LOG = LoggerFactory.getLogger(FXMLRootProvider.class);
 
     @Inject private ApplicationContext ctx;
-    @Inject FXMLLoaderFactory loaderFactory;
+    @Inject private FXMLLoaderFactory loaderFactory;
 
-    public Node getRootByClass(@NotBlank Class<?> viewClass) {
+    public <T extends Node> T getRootByClass(@NotBlank Class<?> viewClass) {
         String viewPath = getViewPath(viewClass);
         String fxml = withExt(viewPath, "fxml");
-        Node node;
+        T node;
 
         try {
             LOG.info("Attempting to load " + fxml);

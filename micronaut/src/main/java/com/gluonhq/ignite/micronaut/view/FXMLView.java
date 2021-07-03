@@ -61,9 +61,8 @@ public class FXMLView<T extends Parent> implements View<T> {
     }
 
     @PostConstruct
-    @SuppressWarnings("unchecked")
     private void init() {
-        rootProperty.set((T) rootProvider.getRootByClass(this.getClass()));
+        rootProperty.set( rootProvider.getRootByClass(this.getClass()));
     }
 
 }
