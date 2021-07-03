@@ -84,7 +84,7 @@ public class DaggerContext implements DIContext {
         injectMembers(contextRoot);
     }
 
-    @Module(library = true, complete = false)
+    @Module(library = true, injects = {FXMLLoader.class}, complete = false)
     class FXModule  {
 
         @Provides
