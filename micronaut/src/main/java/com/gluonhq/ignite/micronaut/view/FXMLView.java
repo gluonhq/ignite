@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, Gluon
+ * Copyright (c) 2020, 2021, Gluon
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,9 +61,8 @@ public class FXMLView<T extends Parent> implements View<T> {
     }
 
     @PostConstruct
-    @SuppressWarnings("unchecked")
     private void init() {
-        rootProperty.set((T) rootProvider.getRootByClass(this.getClass()));
+        rootProperty.set( rootProvider.getRootByClass(this.getClass()));
     }
 
 }

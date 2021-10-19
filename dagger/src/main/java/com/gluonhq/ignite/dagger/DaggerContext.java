@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, Gluon
+ * Copyright (c) 2020, 2021, Gluon
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ public class DaggerContext implements DIContext {
         injectMembers(contextRoot);
     }
 
-    @Module(library = true, complete = false)
+    @Module(library = true, injects = {FXMLLoader.class}, complete = false)
     class FXModule  {
 
         @Provides
