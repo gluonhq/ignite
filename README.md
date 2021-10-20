@@ -48,7 +48,8 @@ class GuiceModule extends AbstractModule {
 By using Gluon Ignite, you not only get dependency injection inside your application class, but also 
 within your FXML controllers too. Even though the sample above shows a Guice context, as mentioned 
 Gluon Ignite also supports other DI frameworks. By using a `DaggerContext` or `SpringContext` in your application, 
-it can be easily set up to work with those frameworks instead.
+it can be easily set up to work with those frameworks instead. 
+Samples of applications are available in the project [Wiki](https://github.com/gluonhq/ignite/wiki/Spring-Sample)
 
 ### Micronaut support
 
