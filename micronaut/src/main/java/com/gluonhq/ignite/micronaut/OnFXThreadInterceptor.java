@@ -27,6 +27,7 @@
  */
 package com.gluonhq.ignite.micronaut;
 
+import io.micronaut.aop.InterceptorBean;
 import io.micronaut.aop.MethodInterceptor;
 import io.micronaut.aop.MethodInvocationContext;
 import javafx.application.Platform;
@@ -34,6 +35,7 @@ import javafx.application.Platform;
 import javax.inject.Singleton;
 
 @Singleton
+@InterceptorBean(OnFXThread.class)
 class OnFXThreadInterceptor implements MethodInterceptor<Object, Object> {
     @Override
     public Object intercept(MethodInvocationContext<Object, Object> context) {
