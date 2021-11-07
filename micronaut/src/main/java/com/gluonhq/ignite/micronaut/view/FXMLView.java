@@ -28,8 +28,6 @@
 package com.gluonhq.ignite.micronaut.view;
 
 import com.gluonhq.ignite.micronaut.FXMLRootProvider;
-import com.gluonhq.ignite.micronaut.OnFXThread;
-import io.micronaut.aop.InterceptorBean;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.scene.Parent;
