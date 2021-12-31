@@ -32,6 +32,7 @@ import javafx.fxml.FXMLLoader;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +41,7 @@ import org.springframework.context.annotation.Scope;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 
@@ -49,7 +51,7 @@ import java.util.function.Supplier;
 public class SpringContext implements DIContext {
 
     private final Object contextRoot;
-    private AnnotationConfigApplicationContext appContext;
+    private ConfigurableApplicationContext appContext;
 
     private final Supplier<Collection<String>> scanPackages;
 
@@ -62,6 +64,14 @@ public class SpringContext implements DIContext {
         this.contextRoot = Objects.requireNonNull(contextRoot);
         appContext = new AnnotationConfigApplicationContext();
         this.scanPackages = Objects.requireNonNull(scanPackages);
+    }
+
+    /**
+     * Create the Spring context
+     * @param contextRoot root object to inject
+     */
+    public SpringContext( Object contextRoot ) {
+        this(contextRoot, List::of);
     }
 
     /**
@@ -88,16 +98,59 @@ public class SpringContext implements DIContext {
 
         String[] uniquePackages = new HashSet<>(scanPackages.get()).toArray(new String[0]);
 
-        appContext = new AnnotationConfigApplicationContext();
-        appContext.register(FXModule.class);
-        appContext.scan(uniquePackages);
-        appContext.refresh();
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.register(FXModule.class);
+        context.scan(uniquePackages);
+        context.refresh();
+
+        appContext = context;
 
         injectMembers(contextRoot);
     }
 
-}
+    /**
+     * Allows application context creation customization.<br>
+     * For example, it can be used to initialize application context using SpringBoot APIs.<br>
+     * In case of using SpringBoot, root class has to be annotated with
+     * <code>@ComponentScan("com.gluonhq.ignite.spring")</code>.
+     * <br>
+     * Here is a simplistic JavaFX application using SpringBoot:
+     *
+     * <pre>
+     * {@code
+     * &#064;SpringBootApplication
+     * &#064;ComponentScan("com.gluonhq.ignite.spring")
+     * public class SpringIgniteDemoApplication extends Application {
+     *
+     *    public static void main(String[] args) {
+     * 	     Application.launch(SpringIgniteDemoApplication.class, args);
+     *    }
+     *
+     *    &#064;Autowired
+     *    private FXMLLoader loader;
+     *
+     *    private final SpringContext context = new SpringContext(this);
+     *
+     *    &#064;Override
+     *    public void start(Stage stage) throws IOException {
+     * 		context.init( () -> SpringApplication.run(SpringIgniteDemoApplication.class));
+     * 		Parent simpleView = loader.load(SpringIgniteDemoApplication.class.getResourceAsStream("simpleView.fxml"));
+     * 		stage.setTitle("Spring Ignite Example");
+     * 		stage.setScene(new Scene(simpleView));
+     * 		stage.show();
+     *    }
+     *
+     * }
+     * }</pre>
+     *
+     * @param applicationContextBuilder function which has to supply application context. Null result is invalid.
+     */
+    public final void init( Supplier<ConfigurableApplicationContext> applicationContextBuilder ) {
+        appContext = Objects.requireNonNull(applicationContextBuilder).get();
+        injectMembers(contextRoot);
+    }
 
+}
 
 @Configuration
 class FXModule implements ApplicationContextAware {
@@ -119,7 +172,6 @@ class FXModule implements ApplicationContextAware {
 
 }
 
-//Simply make use of common patterns
 class SpringUtils {
 
     private SpringUtils(){}
